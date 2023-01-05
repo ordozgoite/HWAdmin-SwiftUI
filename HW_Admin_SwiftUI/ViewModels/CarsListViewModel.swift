@@ -13,11 +13,9 @@ class CarsListViewModel: ObservableObject {
     @Published var carsList: [CarViewModel] = []
     
     func getCars() {
-        carsList = [
-            CarViewModel(car: Car(name: "Carro 1", brand: .hotWheels, year: "2022", line: .main, color: .black, carCase: .a, image: UIImage(named: "example")!, specialTag: .none)),
-            CarViewModel(car: Car(name: "Carro 2", brand: .hotWheels, year: "2022", line: .main, color: .black, carCase: .a, image: UIImage(named: "example")!, specialTag: .none)),
-            CarViewModel(car: Car(name: "Carro 3", brand: .hotWheels, year: "2022", line: .main, color: .black, carCase: .a, image: UIImage(named: "example")!, specialTag: .none))
-        ]
+        WebServices.shared.getAllCars { cars in
+            self.carsList = cars.map { CarViewModel(car: $0) }
+        }
     }
     
 }
@@ -38,3 +36,9 @@ struct CarViewModel: Identifiable {
         car.image
     }
 }
+
+//carsList = [
+//    CarViewModel(car: Car(name: "Carro 1", brand: .hotWheels, year: "2022", line: .main, color: .black, carCase: .a, image: UIImage(named: "example")!, specialTag: .none)),
+//    CarViewModel(car: Car(name: "Carro 2", brand: .hotWheels, year: "2022", line: .main, color: .black, carCase: .a, image: UIImage(named: "example")!, specialTag: .none)),
+//    CarViewModel(car: Car(name: "Carro 3", brand: .hotWheels, year: "2022", line: .main, color: .black, carCase: .a, image: UIImage(named: "example")!, specialTag: .none))
+//]

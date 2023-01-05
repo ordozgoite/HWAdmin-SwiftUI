@@ -15,7 +15,8 @@ struct CarCell: View {
         HStack(spacing: 10) {
             Image(uiImage: car.image)
                 .resizable()
-                .frame(width: 64, height: 64)
+                .frame(width: 32, height: 32)
+                .cornerRadius(8)
             
             Text(car.name)
                 .font(.title3)

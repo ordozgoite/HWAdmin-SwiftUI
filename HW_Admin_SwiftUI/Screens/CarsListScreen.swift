@@ -13,24 +13,30 @@ struct CarsListScreen: View {
     @State private var addViewIsPresented: Bool = false
     
     var body: some View {
-        CarsListView(carsList: $carsListVM.carsList)
-            .onAppear {
-                carsListVM.getCars()
+        VStack {
+            if carsListVM.carsList.isEmpty {
+                ProgressView()
+            } else {
+                CarsListView(carsList: $carsListVM.carsList)
             }
-            .sheet(isPresented: $addViewIsPresented, onDismiss: {
-                // on dismiss
-            }, content: {
-                AddCarScreen()
-            })
-            .navigationTitle("Cars")
-            .toolbar {
-                Button {
-                    addViewIsPresented = true
-                } label: {
-                    Image(systemName: "plus")
-                }
+        }
+        .onAppear(perform: {
+            carsListVM.getCars()
+        })
+        .sheet(isPresented: $addViewIsPresented, onDismiss: {
+            // on dismiss
+        }, content: {
+            AddCarScreen()
+        })
+        .navigationTitle("Cars")
+        .toolbar {
+            Button {
+                addViewIsPresented = true
+            } label: {
+                Image(systemName: "plus")
             }
-            .embedInNavigationView()
+        }
+        .embedInNavigationView()
     }
 }
 
